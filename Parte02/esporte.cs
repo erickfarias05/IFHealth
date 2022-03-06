@@ -2,24 +2,24 @@ using System;
 
 class Esporte {
   private string nome;
-  private int id;
-  public Esporte(string nome, int id) {
+  private int ci;
+  public Esporte(string nome, int ci) {
     this.nome = nome;
-    this.id = id;
+    this.ci = ci;
   }
   public void SetNome(string nome) {
     this.nome = nome;
   }
-  public void SetId(int id) {
-    this.id = id;
+  public void SetCi(int ci) {
+    this.ci = ci;
   }
   public string GetNome() {
     return nome;
   }
-  public int GetId() {
-    return id;
+  public int GetCi() {
+    return ci;
   }
   public override string ToString() {
-    return $"{nome} - {id}";
+    return $"{nome} - {ci}";
   }
 }

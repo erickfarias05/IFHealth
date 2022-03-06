@@ -1,8 +1,10 @@
 using System;
+using System.Collections.Generic;
 
 class Sistema {
   private static Esporte[] esportes = new Esporte[10];
   private static int nEsporte;
+  private static List<Aluno> alunos = new List<Aluno>();
   public static void EsporteInserir(Esporte objeto) {
     // Verificação do vetor
     if (nEsporte == esportes.Length)
@@ -42,5 +44,33 @@ class Sistema {
       if (objeto.GetCi() == ci) return i;
     }
     return -1;
+  }
+  /////////////////////////////////////////////////////////////
+  public static void AlunoInserir(Aluno objeto) {
+    // Inserir o objeto
+    alunos.Add(objeto);
+  }
+  public static List<Aluno> AlunoListar() {
+    //Retornar objetos
+    return alunos;
+  }
+  public static Aluno AlunoListar(int ci) {
+    foreach(Aluno objeto in alunos)
+      if (objeto.GetCi() == ci) return objeto;
+    return null;
+  }
+  public static void AlunoAtualizar(Aluno objeto) {
+    Aluno mud = AlunoListar(objeto.GetCi());
+    if (mud != null) {
+      mud.SetNome(objeto.GetNome());
+      mud.SetMatricula(objeto.GetMatricula());
+      mud.SetEmail(objeto.GetEmail());
+      mud.SetCiEsporte(objeto.GetCiEsporte());
+    }
+  }
+  public static void AlunoExcluir(Aluno objeto) {
+    Aluno mud = AlunoListar(objeto.GetCi());
+    if (mud != null)
+      alunos.Remove(mud);
   }
 }

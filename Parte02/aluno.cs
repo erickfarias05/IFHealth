@@ -2,17 +2,21 @@ using System;
 
 class Aluno {
   private string nome;
+  private int ci;
   private string matricula;
   private string email;
-  private int idEsporte;
-  public Aluno(string nome, string matricula, string email, int idEsporte) {
+  private int ciEsporte;
+  public Aluno(string nome, string matricula, string email, int ciEsporte) {
     this.nome = nome;
     this.matricula = matricula;
     this.email = email;
-    this.idEsporte = idEsporte;
+    this.ciEsporte = ciEsporte;
   }
   public void SetNome(string nome) {
     this.nome = nome;
+  }
+  public void SetCi(int ci) {
+    this.ci = ci;
   }
   public void SetMatricula(string matricula) {
     this.matricula = matricula;
@@ -20,11 +24,14 @@ class Aluno {
   public void SetEmail(string email) {
     this.email = email;
   }
-  public void SetIdEsporte(int idEsporte) {
-    this.idEsporte = idEsporte;
+  public void SetCiEsporte(int ciEsporte) {
+    this.ciEsporte = ciEsporte;
   }
   public string GetNome() {
     return nome;
+  }
+  public int GetCi() {
+    return ci;
   }
   public string GetMatricula() {
     return matricula;
@@ -32,8 +39,8 @@ class Aluno {
   public string GetEmail() {
     return email;
   }
-  public int GetIdEsporte() {
-    return idEsporte;
+  public int GetCiEsporte() {
+    return ciEsporte;
   }
   public override string ToString() {
     return $"{nome} - {matricula} - {email}";
