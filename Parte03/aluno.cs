@@ -6,11 +6,15 @@ class Aluno {
   private string matricula;
   private string email;
   private int ciEsporte;
-  public Aluno(string nome, string matricula, string email, int ciEsporte) {
+  public Aluno(string nome, int ci, string matricula, string email, int ciEsporte) {
     this.nome = nome;
+    this.ci = ci;
     this.matricula = matricula;
     this.email = email;
     this.ciEsporte = ciEsporte;
+  }
+  public Aluno(int ci) {
+    this.ci = ci;
   }
   public void SetNome(string nome) {
     this.nome = nome;
@@ -43,6 +47,6 @@ class Aluno {
     return ciEsporte;
   }
   public override string ToString() {
-    return $"{nome} - {matricula} - {email}";
+    return $"{nome} - {ci} - {matricula} - {email}";
   }
 }
