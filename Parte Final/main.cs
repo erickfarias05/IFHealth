@@ -26,19 +26,24 @@ class Program{
   }
   public static int Menu() {
     Console.WriteLine();
-    Console.WriteLine("------ Faça sua escolha! ------");
-    Console.WriteLine("01 - Inserir um novo esporte à academia");
-    Console.WriteLine("02 - Listar os esportes cadastrados da academia");
-    Console.WriteLine("03 - Atualizar os dados de um esporte da academia");
-    Console.WriteLine("04 - Excluir um esporte da academia");
-    Console.WriteLine("");
-    Console.WriteLine("05 - Inserir um novo aluno à academia");
-    Console.WriteLine("06 - Listar os alunos cadastrados da academia");
-    Console.WriteLine("07 - Atualizar os dados de um aluno da academia");
-    Console.WriteLine("08 - Excluir um aluno da academia");
-    Console.WriteLine("");
-    Console.WriteLine("00 - Finalizar o sistema");
-    Console.WriteLine("-------------------------------");
+    Console.WriteLine("..............:Menu Principal do ADM:................");
+    Console.WriteLine(".------ Faça sua escolha! ----------.");
+    Console.WriteLine(".");
+    Console.WriteLine(".---Menu dos Esportes---");
+    Console.WriteLine(".01 - Inserir um novo esporte à academia");
+    Console.WriteLine(".02 - Listar os esportes cadastrados da academia");
+    Console.WriteLine(".03 - Atualizar os dados de um esporte da academia");
+    Console.WriteLine(".04 - Excluir um esporte da academia");
+    Console.WriteLine(".");
+    Console.WriteLine(".---Menu dos Alunos---");
+    Console.WriteLine(".05 - Inserir um novo aluno à academia");
+    Console.WriteLine(".06 - Listar os alunos cadastrados da academia");
+    Console.WriteLine(".07 - Atualizar os dados de um aluno da academia");
+    Console.WriteLine(".08 - Excluir um aluno da academia");
+    Console.WriteLine(".");
+    Console.WriteLine(".---Terminando trabalho---");
+    Console.WriteLine(".00 - Finalizar o sistema");
+    Console.WriteLine(".---------------------------------------------------");
     Console.Write("Opção: ");
     int op = int.Parse(Console.ReadLine());
     Console.WriteLine();
@@ -58,7 +63,7 @@ class Program{
     Console.WriteLine("------ Listar os esportes cadastrados ------");
     foreach(Esporte objeto in Sistema.EsporteListar())
       Console.WriteLine(objeto);
-    Console.WriteLine("----------------------------");
+    Console.WriteLine("------------------------------------------");
   }
   public static void EsporteAtualizar() {
     Console.WriteLine("-------- Atualizar dados de um esporte --------");
@@ -90,12 +95,16 @@ class Program{
     string matricula = Console.ReadLine();
     Console.Write("Informe o email do aluno: ");
     string email = Console.ReadLine();
-
+    Console.Write("Informe o peso do aluno: ");
+    int peso = int.Parse(Console.ReadLine());
+     Console.Write("Informe a altura do aluno: ");
+    int altura = int.Parse(Console.ReadLine());
+    
     EsporteListar();
     Console.Write("Informe o código do esporte: ");
     int ciEsporte = int.Parse(Console.ReadLine());
     
-    Aluno objeto = new Aluno(nome, ci, matricula, email, ciEsporte);
+    Aluno objeto = new Aluno(nome, ci, matricula, email, ciEsporte, peso, altura);
     Sistema.AlunoInserir(objeto);
     Console.WriteLine("------ Operação concluída! ------");
   }
@@ -115,12 +124,16 @@ class Program{
     string matricula = Console.ReadLine();
     Console.Write("Informe o email do aluno: ");
     string email = Console.ReadLine();
+    Console.Write("Informe o peso do aluno: ");
+    int peso = int.Parse(Console.ReadLine());
+    Console.Write("Informe a altura do aluno: ");
+    int altura = int.Parse(Console.ReadLine());
 
     EsporteListar();
     Console.Write("Informe o código do esporte: ");
     int ciEsporte = int.Parse(Console.ReadLine());
 
-    Aluno objeto = new Aluno(nome, ci, matricula, email, ciEsporte);
+    Aluno objeto = new Aluno(nome, ci, matricula, email, ciEsporte, peso, altura);
     
     Sistema.AlunoAtualizar(objeto);
     Console.WriteLine("------ Operação concluída! ------");
@@ -132,5 +145,5 @@ class Program{
     Aluno objeto = new Aluno(ci);
     Sistema.AlunoExcluir(objeto);
     Console.WriteLine("------ Operação concluída! ------");
-  }
+    }
 }
