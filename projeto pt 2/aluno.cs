@@ -8,7 +8,8 @@ class Aluno {
   private int ciEsporte;
   private double peso;
   private double altura;
-  public Aluno(string nome, int ci, string matricula, string email, int ciEsporte, double peso, double altura) {
+  private int ciProfessor;
+  public Aluno(string nome, int ci, string matricula, string email, int ciEsporte, double peso, double altura, int ciProfessor) {
     this.nome = nome;
     this.ci = ci;
     this.matricula = matricula;
@@ -16,6 +17,7 @@ class Aluno {
     this.ciEsporte = ciEsporte;
     this.peso = peso;
     this.altura = altura;
+    this.ciProfessor = ciProfessor;
   }
   public Aluno(int ci) {
     this.ci = ci;
@@ -45,6 +47,9 @@ class Aluno {
    public void SetAltura(double altura) {
     this.altura = altura;
   }
+ public void SetCiProfessor(int ciProfessor) {
+    this.ciProfessor = ciProfessor;
+  }
   public string GetNome() {
     return nome;
   }
@@ -66,8 +71,12 @@ class Aluno {
   public double GetAltura() {
     return altura;
   }  
+   public int GetCiProfessor() {
+    return ciProfessor;
+  }
+
   public override string ToString() {
-    return $"{nome} - {ci} - {matricula} - {email} - {peso} kg - {altura} cm";
+    return $"{nome} - {ci} - {matricula} - {email} - {peso} kg - {altura} cm ";
   }
 
 }

@@ -5,6 +5,7 @@ class Sistema {
   private static Esporte[] esportes = new Esporte[10];
   private static int nEsporte;
   private static List<Aluno> alunos = new List<Aluno>();
+  private static List<Professor> professores = new List<Professor> ();
   public static void EsporteInserir(Esporte objeto) {
     // Verificação do vetor
     if (nEsporte == esportes.Length)
@@ -46,6 +47,41 @@ class Sistema {
     return -1;
   }
   /////////////////////////////////////////////////////////////
+  public static void ProfessorInserir(Professor objeto) {
+    //calcular Id do professor
+    int ci = 0;
+    foreach (Professor mud in professor)
+      if (mud.Ci > ci) ci = mud.Ci;
+    obj.Ci = ci + 1; 
+    // Inserir o objeto
+    professor.Add(objeto);
+  }
+  public static List<Professor> ProfessorListar() {
+    //Retornar objetos
+    return professores;
+  }
+  public static Professor ProfessorListar(int ci) {
+    foreach(Professor objeto in professores)
+      if (objeto.Ci == ci) return objeto;
+    return null;
+  }
+  public static void ProfessorAtualizar(Professor objeto) {
+    Professor mud = ProfessorListar(objeto.Ci);
+    if (mud != null) {
+      mud.Nome = objeto.GetNome;
+      mud.Idade = objeto.GetIdade
+      mud.Telefone = objeto.GetTelefone
+      mud.SetCiEsporte(objeto.GetCiEsporte());
+    }
+  }
+  public static void ProfessorExcluir(Professor objeto) {
+    Aluno mud = ProfessorListar(objeto.Ci));
+    if (mud != null)
+      professor.Remove(mud);
+  }
+
+
+  ////////////////////////////////////////////////////////////////////////
   public static void AlunoInserir(Aluno objeto) {
     // Inserir o objeto
     alunos.Add(objeto);
