@@ -6,8 +6,17 @@ class Sistema {
   private static int nEsporte;
   private static List<Aluno> alunos = new List<Aluno>();
   private static List<Professor> professores = new List<Professor>();
-  private static List<Servicoesp> servicos = new List<Servicoesp>();
-    private static List<> s = new List<>();
+
+
+  public static void ArquivosAbrir() {
+    
+  }
+
+  public static void ArquivosSalvar() {
+    
+  }
+  
+    
   public static void EsporteInserir(Esporte objeto) {
     // Verificação do vetor
     if (nEsporte == esportes.Length)
@@ -99,6 +108,7 @@ class Sistema {
         a.Add(objeto);
     return a;
   }
+  
   public static Aluno AlunoListar(int ci) {
     foreach(Aluno objeto in alunos)
       if (objeto.GetCi() == ci) return objeto;
@@ -120,41 +130,5 @@ class Sistema {
     if (mud != null)
       alunos.Remove(mud);
   }
-
-
-//////////////////////////////////////////////////////////////////
-
- public static void ServicoespInserir(Servicoesp objeto) {
-    int ci = 0;
-     foreach(Servicoesp mud in servicos)
-       if (mud.Ci > ci) ci = mud.Ci;
-     objeto.Ci = ci + 1;
-     // Inserir o objeto
-     
-    servicos.Add(objeto);
-  }
-  public static List<Servicoesp> ServicoespListar() {
-    //Retornar objetos
-    return servicos;
-  }
-  public static Servicoesp ServicoespListar(int ci) {
-    foreach(Servicoesp objeto in servicos)
-      if (objeto.Ci == ci) return objeto;
-    return null;
-  }
-  public static void ServicoespAtualizar(Servicoesp objeto) {
-    Servicoesp mud = ServicoespListar(objeto.Ci);
-    if (mud != null) {
-      mud.Nome = objeto.Nome;
-      mud.Preco = objeto.Preco;
-  }
-  }
-    
-  public static void ServicoespExcluir(Servicoesp objeto) {
-    Servicoesp mud = ServicoespListar(objeto.Ci);
-    if (mud != null)
-      servicos.Remove(mud);
-  }
-
 
 }

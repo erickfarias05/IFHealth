@@ -2,36 +2,55 @@ using System;
 using System.Globalization;
 using System.Threading;
 
-
-
 class Program{
+
+  private static Professor professorLogin = null;
+  
   public static void Main() {
-       Thread.CurrentThread.CurrentCUlture = 
+       Thread.CurrentThread.CurrentCulture = 
          new CultureInfo("pt-BR");
     
     Console.WriteLine("Seja bem-vindo ao IFHealth!");
     int op = 0;
+    int perfil = 0;
     do {
       try {
-      op = Menu();
-        switch(op) {
-          case 1 : EsporteInserir(); break;
-          case 2 : EsporteListar(); break;
-          case 3 : EsporteAtualizar(); break;
-          case 4 : EsporteExcluir(); break;
-          case 5 : AlunoInserir(); break;
-          case 6 : AlunoListar(); break;
-          case 7 : AlunoAtualizar(); break;
-          case 8 : AlunoExcluir(); break;
-          case 9 : ProfessorInserir(); break;
-          case 10 : ProfessorListar(); break;
-          case 11 : ProfessorAtualizar(); break;
-          case 12 : ProfessorExcluir(); break;
-          case 13 : ServicoespInserir(); break;
-          case 14 : ServicoespListar(); break;
-          case 15 : ServicoespAtualizar(); break;
-          case 16 : ServicoespExcluir(); break;
-          
+        if (perfil == 0) {
+          op = 0;
+          perfil = MenuUsuario();
+        }
+        if (perfil == 1) {
+          op = MenuAdmin();
+          switch(op) {
+            case 1 : EsporteInserir(); break;
+            case 2 : EsporteListar(); break;
+            case 3 : EsporteAtualizar(); break;
+            case 4 : EsporteExcluir(); break;
+            case 5 : AlunoInserir(); break;
+            case 6 : AlunoListar(); break;
+            case 7 : AlunoAtualizar(); break;
+            case 8 : AlunoExcluir(); break;
+            case 9 : ProfessorInserir(); break;
+            case 10 : ProfessorListar(); break;
+            case 11 : ProfessorAtualizar(); break;
+            case 12 : ProfessorExcluir(); break;
+            case 99: perfil = 0; break;
+          }
+        }
+        if (perfil == 2 && professorLogin == null) {
+          op = MenuProfessorLogin();
+          switch(op) {
+            case 1 : ProfessorLogin(); break;
+            case 99: perfil = 0; break;
+          }
+        }
+        if (perfil == 2 && professorLogin != null) {
+          op = MenuProfessorLogout();
+          switch(op) {
+            case 1 : ProfessorConsultarHorarios(); break;
+            case 2 : ProfessorListarAlunos(); break;
+            case 99: ProfessorLogout(); break;
+          }
         }
       }
       catch (Exception erro) {
@@ -40,7 +59,43 @@ class Program{
       }
     } while (op != 0);
   }
-  public static int Menu() {
+
+  public static void ProfessorLogin() {
+    Console.WriteLine("------- Login do Professor -------");
+    ProfessorListar();
+    Console.Write("Informe o código do professor para logar: ");
+    int ci = int.Parse(Console.ReadLine());
+    professorLogin = Sistema.ProfessorListar(ci);
+  }
+  public static void ProfessorLogout() {
+    Console.WriteLine("------- Logout do Professor -------");
+    professorLogin = null;
+  }
+  public static void ProfessorConsultarHorarios() { }
+  public static void ProfessorListarAlunos() {
+    Console.WriteLine("------ Meus alunos cadastrados ------");
+    foreach(Aluno objeto in Sistema.AlunoListar()) {
+      Esporte e = Sistema.EsporteListar(objeto.GetCiEsporte());
+      Professor p = Sistema.ProfessorListar(objeto.GetCiProfessor());
+      Console.WriteLine($"{objeto} - {e.GetCi()} - {p.Ci} ");
+    }
+    Console.WriteLine("----------------------------");
+  }
+  
+  public static int MenuUsuario() {
+    Console.WriteLine();
+    Console.WriteLine("---------------------------");
+    Console.WriteLine("1 - Entrar como Administrador");
+    Console.WriteLine("2 - Entrar como Professor");
+    Console.WriteLine("0 - Fim");
+    Console.WriteLine("----------------------------");
+    Console.Write("Informe uma opção: ");
+    int op = int.Parse(Console.ReadLine());
+    Console.WriteLine();
+    return op;
+  }
+  
+  public static int MenuAdmin() {
     Console.WriteLine();
     Console.WriteLine("..............:Menu Principal do ADM:................");
     Console.WriteLine(".------ Faça sua escolha! ----------.");
@@ -63,15 +118,7 @@ class Program{
     Console.WriteLine(".11 - Atualizar os dados de um professor da academia");
     Console.WriteLine(".12 - Excluir um professor da academia");
     Console.WriteLine(".");
-    Console.WriteLine(".---Menu dos Serviços especiais---");
-    Console.WriteLine(".13 - Inserir um novo serviço à academia");
-    Console.WriteLine(".14 - Listar os serviços cadastrados da academia");
-    Console.WriteLine(".15 - Atualizar os dados de um serviço da academia");
-    Console.WriteLine(".16 - Excluir um serviço da academia");
-    Console.WriteLine(".");
-     Console.WriteLine(".17 - Abrir agenda");
-    Console.WriteLine(".18 - Consultar Agenda");
-    Console.WriteLine(".");
+    Console.WriteLine(".99 - Voltar ao menu anterior");
     Console.WriteLine(".---Terminando trabalho---");
     Console.WriteLine(".00 - Finalizar o sistema");
     Console.WriteLine(".---------------------------------------------------");
@@ -80,13 +127,44 @@ class Program{
     Console.WriteLine();
     return op;
   }
+
+  public static int MenuProfessorLogin() {
+    Console.WriteLine();
+    Console.WriteLine("-----------------------------");
+    Console.WriteLine("01 - Login");
+    Console.WriteLine("99 - Voltar");
+    Console.WriteLine("00 - Finalizar");
+    Console.WriteLine("------------------------------");
+    Console.Write("Informe uma opção: ");
+    int op = int.Parse(Console.ReadLine());
+    Console.WriteLine();
+    return op;
+  }
+
+  public static int MenuProfessorLogout() {
+    Console.WriteLine();
+    Console.WriteLine("------------------------");
+    Console.WriteLine("Bem vindo(a), " + professorLogin.Nome);
+    Console.WriteLine("--------------------------");
+    Console.WriteLine("01 - Consultar horários");
+    Console.WriteLine("02 - Listar meus alunos");
+    Console.WriteLine("99 - Logout");
+    Console.WriteLine("00 - Finalizar");
+    Console.WriteLine("-----------------------------");
+    Console.Write("Informe uma opção: ");
+    int op = int.Parse(Console.ReadLine());
+    Console.WriteLine();
+    return op;
+  }
+  
+  ///////////////////////////////////////////////////////////////////////////////////////
   public static void EsporteInserir() {
     Console.WriteLine("-------- Inserir um novo esporte --------");
     Console.WriteLine("Informe o nome do esporte: ");
     string nome = Console.ReadLine();
     Console.Write("Informe o código do esporte: ");
     int ci = int.Parse(Console.ReadLine());
-    Esporte objeto = new Esporte(nome, ci);
+    Esporte objeto = new Esporte(ci, nome);
     Sistema.EsporteInserir(objeto);
     Console.WriteLine("------ Operação concluída! ------");
   }
@@ -102,7 +180,7 @@ class Program{
     int ci = int.Parse(Console.ReadLine());
     Console.Write("Informe o novo nome do esporte: ");
     string nome = Console.ReadLine();
-    Esporte objeto = new Esporte(nome, ci);
+    Esporte objeto = new Esporte(ci, nome);
     Sistema.EsporteAtualizar(objeto);
     Console.WriteLine("------ Operação concluída! ------");
   }
@@ -111,7 +189,7 @@ class Program{
     Console.Write("Informe o código do esporte: ");
     int ci = int.Parse(Console.ReadLine());
     string nome = "";
-    Esporte objeto = new Esporte(nome, ci);
+    Esporte objeto = new Esporte(ci, nome);
     Sistema.EsporteExcluir(objeto);
     Console.WriteLine("------ Operação concluída! ------");
   }
@@ -130,6 +208,7 @@ class Program{
     int peso = int.Parse(Console.ReadLine());
      Console.Write("Informe a altura do aluno: ");
     int altura = int.Parse(Console.ReadLine());
+  
     
     EsporteListar();
     Console.Write("Informe o código do esporte: ");
@@ -139,7 +218,7 @@ class Program{
     Console.Write("Informe o código do professor: ");
     int ciProfessor = int.Parse(Console.ReadLine());
     
-    Aluno objeto = new Aluno(nome, ci, matricula, email, ciEsporte, ciProfessor, peso, altura);
+    Aluno objeto = new Aluno(nome, ci, matricula, email, ciEsporte, peso, altura, ciProfessor );
     Sistema.AlunoInserir(objeto);
     Console.WriteLine("------ Operação concluída! ------");
   }
@@ -147,9 +226,9 @@ class Program{
   public static void AlunoListar() {
     Console.WriteLine("------ Listar os alunos cadastrados ------");
     foreach(Aluno objeto in Sistema.AlunoListar()) {
-    Esporte e = Sistema.EsporteListar(objeto.GetCiEsporte());
-    Professor p = Sistema.ProfessorListar(objeto.GetCiProfessor());
-      Console.WriteLine($"{objeto} {e.GetCi()} {p.Ci}");
+      Esporte e = Sistema.EsporteListar(objeto.GetCiEsporte());
+      Professor p = Sistema.ProfessorListar(objeto.GetCiProfessor());
+      Console.WriteLine($"{objeto} - {e.GetCi()} - {p.Ci} ");
     }
     Console.WriteLine("----------------------------");
   }
@@ -177,7 +256,7 @@ class Program{
     Console.Write("Informe o código do professor: ");
     int ciProfessor = int.Parse(Console.ReadLine());
     
-    Aluno objeto = new Aluno(nome, ci, matricula, email, ciEsporte, ciProfessor, peso, altura);
+    Aluno objeto = new Aluno(nome, ci, matricula, email, ciEsporte, peso, altura, ciProfessor);
     
     Sistema.AlunoAtualizar(objeto);
     Console.WriteLine("------ Operação concluída! ------");
@@ -235,45 +314,5 @@ public static void ProfessorInserir() {
     }
 //////////////////////////////////////////////////////////////////////////
   
-public static void ServicoespInserir() {
-    Console.WriteLine("-------- Inserir um novo serviço especial --------");
-    Console.WriteLine("Informe o nome do serviço: ");
-    string nome = Console.ReadLine();
-    Console.Write("Informe o preço do serviço: ");
-    double preco = double.Parse(Console.ReadLine());
-
-    
-    Servicoesp objeto = new Servicoesp { Nome = nome, Preco = preco};
-    Sistema.ServicoespInserir(objeto);
-    Console.WriteLine("------ Operação concluída! ------");
-  }
-  public static void ServicoespListar() {
-    Console.WriteLine("------ Listar os serviços especiais cadastrados ------");
-    foreach(Servicoesp objeto in Sistema.ServicoespListar())
-      Console.WriteLine(objeto);
-    Console.WriteLine("----------------------------");
-  }
-  public static void ServicoespAtualizar() {
-    Console.WriteLine("-------- Atualizar dados de um serviço especial --------");
-    Console.Write("Informe o código do serviço: ");
-    int ci = int.Parse(Console.ReadLine());
-    Console.WriteLine("Informe o nome do serviço: ");
-    string nome = Console.ReadLine();
-    Console.Write("Informe o preco do serviço: ");
-    double preco = double.Parse(Console.ReadLine());
-    
-    Servicoesp objeto = new Servicoesp { Ci= ci, Nome = nome, Preco = preco};
-    
-    Sistema.ServicoespAtualizar(objeto);
-    Console.WriteLine("------ Operação concluída! ------");
-  }
-    public static void ServicoespExcluir() {
-    Console.WriteLine("-------- Excluir um serviço especial --------");
-    Console.Write("Informe o código do serviço: ");
-    int ci = int.Parse(Console.ReadLine());
-    Servicoesp objeto = new Servicoesp { Ci= ci};
-    Sistema.ServicoespExcluir(objeto);
-    Console.WriteLine("------ Operação concluída! ------");
-    }
 
 }
